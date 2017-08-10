@@ -78,4 +78,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
   
   config.action_mailer.default_url_options = { host: 'radiant-savannah-47694.herokuapp.com' }
+  
+  #logger level to Warn to prevent tokens from being leaked into logs
+  config.log_level = :warn
 end
