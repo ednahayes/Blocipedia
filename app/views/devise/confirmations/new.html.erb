@@ -7,7 +7,11 @@
     <p><%= f.label :username %><br />
     <%= f.text_field :username %></p>
   </div>
-
+  <p> or </p>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true %>
+  </div>
   <div class="actions">
     <%= f.submit "Resend confirmation instructions" %>
   </div>
