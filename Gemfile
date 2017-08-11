@@ -37,13 +37,10 @@
  
  gem 'devise'
  
-<<<<<<< HEAD
  gem 'bootstrap-sass'
-=======
-gem 'figaro', '1.0'
+ gem 'figaro', '1.0'
 
-gem 'bootstrap-sass'
->>>>>>> new-checkpoint-2
+
  
  group :development do
    gem 'listen', '~> 3.0.5'
