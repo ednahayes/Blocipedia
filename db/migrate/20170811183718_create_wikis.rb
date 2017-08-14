@@ -3,7 +3,7 @@ class CreateWikis < ActiveRecord::Migration[5.1]
     create_table :wikis do |t|
       t.string :title
       t.text :body
-      t.boolean :private
+      t.boolean :private, default: true
       t.references :user, foreign_key: true
 
       t.timestamps
