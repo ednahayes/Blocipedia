@@ -3,6 +3,7 @@ class WikisController < ApplicationController
   
   def index
     @wikis = Wiki.all
+    #@wikis = WikiPolicy::Scope.new(current_user, Wiki).resolve
   end
 
   def show
@@ -32,7 +33,7 @@ class WikisController < ApplicationController
   def update
     @wiki = Wiki.find(params[:id])
     @wiki.assign_attributes(wiki_params)
- 
+    authorize @wiki
     if @wiki.save
       flash[:notice] = "Wiki was updated."
       redirect_to @wiki
@@ -40,6 +41,13 @@ class WikisController < ApplicationController
       flash.now[:alert] = "There was an error saving the wiki. Please try again."
       render :edit
     end
+  end  
+  
+  def publish
+    @wiki = Wiki.find(params[:id])
+    authorize @wiki, :update?
+    @wiki.publish!
+    redirect_to @wiki
   end  
   
   def destroy

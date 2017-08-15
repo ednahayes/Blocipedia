@@ -25,7 +25,7 @@
  
  user = User.first
  user.update_attributes!(
-   username: newuser
+   username: 'testuser',
    email: 'princessahe@hotmail.com', # replace this with your personal email
    password: 'helloworld'
   )

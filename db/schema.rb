@@ -26,6 +26,10 @@ ActiveRecord::Schema.define(version: 20170811183718) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "username"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
@@ -34,7 +38,7 @@ ActiveRecord::Schema.define(version: 20170811183718) do
   create_table "wikis", force: :cascade do |t|
     t.string "title"
     t.text "body"
-    t.boolean "private"
+    t.boolean "private", default: true
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

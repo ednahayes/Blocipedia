@@ -26,4 +26,10 @@
      letters.shuffle!
      letters[0,rand(3..8)].join
    end
+   
+   def self.random_email
+     letters = ('a'..'z').to_a
+     letters.shuffle!
+     letters[0,rand(1..80000)].join + '@example.com'
+   end
  end
