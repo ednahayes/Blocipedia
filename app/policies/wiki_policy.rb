@@ -40,7 +40,7 @@ class WikiPolicy < ApplicationPolicy
     def resolve
       if user.admin?
         scope.all
-      elsif user.premium?
+      elsif 
         scope.all
         scope.where(published: true)
       end

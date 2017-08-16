@@ -1,5 +1,6 @@
 class WikisController < ApplicationController
   
+  before_action :authorize_user, except: [:index, :show] 
   
   def index
     @wikis = Wiki.all
@@ -9,6 +10,7 @@ class WikisController < ApplicationController
   def show
     @wiki = Wiki.find(params[:id])
   end
+
 
   def new
     @wiki = Wiki.new
@@ -34,7 +36,7 @@ class WikisController < ApplicationController
     @wiki = Wiki.find(params[:id])
     @wiki.assign_attributes(wiki_params)
     authorize @wiki
-    if @wiki.save
+    if @wiki.update(wiki_params) #@wiki.save
       flash[:notice] = "Wiki was updated."
       redirect_to @wiki
     else
@@ -43,12 +45,7 @@ class WikisController < ApplicationController
     end
   end  
   
-  #def publish
-   #@wiki = Wiki.find(params[:id])
-   #authorize @wiki, :update?
-   #@wiki.publish!
-   #redirect_to @wiki
-  #end  
+  
   
   def destroy
     @wiki = Wiki.find(params[:id])
@@ -70,9 +67,8 @@ class WikisController < ApplicationController
  
   
     def authorize_user
-        wiki = Wiki.find(params[:id])
-
-        unless current_user == wiki.user || current_user.admin?
+        @wiki = Wiki.find(params[:id])
+        unless current_user == @wiki.user || current_user.admin?
             flash[:alert] = "You must be an admin to do that."
             redirect_to wiki_path
         end
