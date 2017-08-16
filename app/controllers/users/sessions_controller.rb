@@ -20,11 +20,35 @@ class Users::SessionsController < Devise::SessionsController
    def show
     @user = authorize User.find(params[:id])
     @wikis = @user.wikis.visible_to(current_user, user.admin)
+    @private_wikis = @wikis.where(private: true)
+    @public_wikis = @wikis.where(private: false)
    end
+   
+   def upgrade
+    @wikis = current_user.wikis
+    @user = User.find(params[:id])
+    @user.update_attribute(:premium, true)
+    @wikis.each do |wiki|
+      wiki.update_attribute(:private, true)
+    end 
+    redirect_to user_registration_path
+   end 
+   
+  def downgrade
+    @wikis = current_user.wikis
+    @user = User.find(params[:id])
+    @user.update_attribute(:premium, false)
+    @wikis.each do |wiki|
+      wiki.update_attribute(:private, false)
+    end 
+    redirect_to user_registration_path
+  end   
 
    def pundit_user
     User.find_by_other_means
    end
+
+
 
    protected
 

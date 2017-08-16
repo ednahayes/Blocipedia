@@ -44,6 +44,8 @@
  
  gem 'faker'
  
+ gem 'stripe'
+ 
  group :development do
    gem 'listen', '~> 3.0.5'
  end

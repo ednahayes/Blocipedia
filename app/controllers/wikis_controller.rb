@@ -9,15 +9,22 @@ class WikisController < ApplicationController
 
   def show
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
+    #unless @wiki.private == nil
+     # flash[:alert] = "You must be signed in to view private topics."
+      #redirect_to @wiki
+    #end
   end
 
 
   def new
     @wiki = Wiki.new
+    #authorize @wiki
   end
 
   def edit
-    @wiki = Wiki.find(params[:id])    
+    @wiki = Wiki.find(params[:id])
+    #authorize @wiki
   end
   
   def create
@@ -62,13 +69,13 @@ class WikisController < ApplicationController
    
     private
     def wiki_params
-        params.require(:wiki).permit(:title, :body, :private)
+        params.require(:wiki).permit(:title, :body, :private, :role)
     end
  
   
     def authorize_user
-        @wiki = Wiki.find(params[:id])
-        unless current_user == @wiki.user || current_user.admin?
+        #@wiki = Wiki.find(params[:id])
+        unless current_user  || current_user.admin? || current_user.premium?
             flash[:alert] = "You must be an admin to do that."
             redirect_to wiki_path
         end

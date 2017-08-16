@@ -49,7 +49,7 @@ class WikiPolicy < ApplicationPolicy
 
   
   def permitted_attributes
-    if user.admin? || user.owner_of?(wiki)
+    if user.admin? || user.owner_of?(wiki) || user.premium?
       [:title, :body, :private]
     else
       [:private]

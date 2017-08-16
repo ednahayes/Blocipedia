@@ -1,6 +1,7 @@
 class Wiki < ApplicationRecord
     belongs_to :user
-  
+    has_many :users
+    
     default_scope { order('created_at DESC') }
  
     scope :visible_to, -> (user) { user ? all : joins(:wiki).where('wikis.private' => true) }  

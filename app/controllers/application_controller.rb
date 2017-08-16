@@ -29,6 +29,7 @@ class ApplicationController < ActionController::Base
    redirect_to(request.referrer || root_path)
  end
 
+  
   #def admin_list
     #authorize Wiki # we don't have a particular post to authorize
   # Rest of controller action
