@@ -3,7 +3,7 @@ class WikisController < ApplicationController
   
   def index
     @wikis = Wiki.all
-    #@wikis = WikiPolicy::Scope.new(current_user, Wiki).resolve
+    #@wikis = policy_scope(Wiki)
   end
 
   def show
@@ -43,12 +43,12 @@ class WikisController < ApplicationController
     end
   end  
   
-  def publish
-    @wiki = Wiki.find(params[:id])
-    authorize @wiki, :update?
-    @wiki.publish!
-    redirect_to @wiki
-  end  
+  #def publish
+   #@wiki = Wiki.find(params[:id])
+   #authorize @wiki, :update?
+   #@wiki.publish!
+   #redirect_to @wiki
+  #end  
   
   def destroy
     @wiki = Wiki.find(params[:id])

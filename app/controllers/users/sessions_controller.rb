@@ -16,6 +16,15 @@ class Users::SessionsController < Devise::SessionsController
    def destroy
      super
    end
+   
+   def show
+    @user = authorize User.find(params[:id])
+    @wikis = @user.wikis.visible_to(current_user, user.admin)
+   end
+
+   def pundit_user
+    User.find_by_other_means
+   end
 
    protected
 
