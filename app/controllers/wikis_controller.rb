@@ -10,10 +10,10 @@ class WikisController < ApplicationController
   def show
     @wiki = Wiki.find(params[:id])
     authorize @wiki
-    #unless @wiki.private == nil
+    #unless @wiki.private == 'false'
      # flash[:alert] = "You must be signed in to view private topics."
-      #redirect_to @wiki
-    #end
+    #  redirect_to @wiki
+   # end
   end
 
 

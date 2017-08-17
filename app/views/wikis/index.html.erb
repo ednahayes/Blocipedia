@@ -9,7 +9,7 @@
            <h4 class="media-heading">
  <!-- #if wiki is private -->
           <% if wiki.private? %>
-            <%= link_to wiki.title, wiki, class: "private" %> <small>[private]</small>
+            <%= link_to wiki.title, wiki.private == 'true', class: "private" %> <small>[private]</small>
           <% else %>
             <%= link_to wiki.title, wiki %>
           <% end %>

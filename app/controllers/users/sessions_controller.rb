@@ -20,12 +20,12 @@ class Users::SessionsController < Devise::SessionsController
    def show
     @user = authorize User.find(params[:id])
     @wikis = @user.wikis.visible_to(current_user, user.admin)
-    @private_wikis = @wikis.where(private: true)
-    @public_wikis = @wikis.where(private: false)
+    #@private_wikis = @wikis.where(private: true)
+    #@public_wikis = @wikis.where(private: false)
    end
    
-   def upgrade
-    @wikis = current_user.wikis
+   def upgrade(current_user)
+    @wikis.user = current_user.wikis
     @user = User.find(params[:id])
     @user.update_attribute(:role, 'premium')
     @wikis.each do |wiki|
@@ -34,15 +34,23 @@ class Users::SessionsController < Devise::SessionsController
     redirect_to wiki_path
    end 
    
-  def downgrade
-    @wikis = current_user.wikis
+  def downgrade(current_user)
+    @wikis.user = current_user.wikis
     @user = User.find(params[:id])
-    @user.update_attribute(:role, 'standard')
-    @wikis.each do |wiki|
-      wiki.update_attribute(:private, false)
-    end 
-    redirect_to wiki_path
-  end   
+    
+    if @user.downgrade!
+      @user.update_attribute(:role, 'standard')
+      @wikis.each do |wiki|
+        wiki.update_attribute(:private, false)
+       end 
+      flash[:notice] = "You've been downgraded to standard. Your private wikis are now public."
+      redirect_to wiki_path
+    else
+      flash[:error] = "There was an error updating your account. Please try again."
+      redirect_to :back
+    end
+  end
+  
 
    def pundit_user
     User.find_by_other_means

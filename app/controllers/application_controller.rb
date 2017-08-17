@@ -11,6 +11,14 @@ class ApplicationController < ActionController::Base
   #after_action :verify_authorized, except: :index
   #after_action :verify_policy_scoped, only: :index
 
+  def downgrade_user_to_standard
+     current_user.update_attributes(role: "standard")
+  end
+
+  def current_user_downgrade_wikis
+    current_user.wikis.where(private: true).update_all(private: false)
+  end 
+  
   
   def configure_permitted_parameters
     added_attrs = [:username, :email, :password, :password_confirmation, :remember_me]

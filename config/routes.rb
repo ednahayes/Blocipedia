@@ -6,11 +6,11 @@ Rails.application.routes.draw do
 
   resources :wikis
   
-  #resources :users #[:new, :create, :show]
-  
+  #resources :users, only: [:new, :create, :show]
+
   resources :charges, only: [:new, :create]
 
-  #devise_for :controllers
+
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }

@@ -5,7 +5,8 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def update?
-    user.present?
+    #user.present?
+    user.role == 'admin' || record.user == user || user.role == 'premium'
   end
 
   def destroy?
@@ -21,14 +22,14 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def show?
-    user.present?
+    user.present? 
   end
 
   def edit?
-    user.present?
+    user.present? && (user.role == 'admin' || record.user == user || user.role == 'premium')
   end
   
- class Scope 
+  class Scope 
 
     attr_reader :user, :scope
 
@@ -38,21 +39,28 @@ class WikiPolicy < ApplicationPolicy
     end
     
     def resolve
-      if user.admin?
-        scope.all
-      elsif 
-        scope.all
+      wikis = []
+      if user.role == 'admin' || user.role == 'premium'
+        wikis = scope.all
+      else
+        wikis = scope.all
         scope.where(published: true)
+        all_wikis.each do |wiki|
+           if wiki.private == false 
+             wikis << wiki 
+           end
+        end
       end
+      wikis 
     end
- end
 
   
-  def permitted_attributes
-    if user.admin? || user.owner_of?(wiki) || user.premium?
-      [:title, :body, :private]
-    else
-      [:private]
+    def permitted_attributes
+      if user.admin? || user.owner_of?(wiki) || user.premium?
+        [:title, :body, :private]
+      else
+        [:private]
+      end
     end
   end
 end
