@@ -19,15 +19,17 @@ class WikisController < ApplicationController
 
   def new
     @wiki = Wiki.new
-    #authorize @wiki
+    @user = current_user
+    authorize @wiki
   end
 
   def edit
     @wiki = Wiki.find(params[:id])
-    #authorize @wiki
+    authorize @wiki
   end
   
   def create
+     @user = current_user
      @wiki = Wiki.new(wiki_params)
      @wiki.user = current_user
      if @wiki.save
@@ -56,7 +58,7 @@ class WikisController < ApplicationController
   
   def destroy
     @wiki = Wiki.find(params[:id])
- 
+    authorize @wiki
 
     if @wiki.destroy
       flash[:notice] = "\"#{@wiki.title}\" was deleted successfully."
@@ -75,7 +77,7 @@ class WikisController < ApplicationController
   
     def authorize_user
         #@wiki = Wiki.find(params[:id])
-        unless current_user  || current_user.admin? || current_user.premium?
+        unless current_user  || current_user.role == 'admin' || current_user.role = 'premium'
             flash[:alert] = "You must be an admin to do that."
             redirect_to wiki_path
         end

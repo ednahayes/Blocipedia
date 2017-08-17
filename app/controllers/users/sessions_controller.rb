@@ -27,21 +27,21 @@ class Users::SessionsController < Devise::SessionsController
    def upgrade
     @wikis = current_user.wikis
     @user = User.find(params[:id])
-    @user.update_attribute(:premium, true)
+    @user.update_attribute(:role, 'premium')
     @wikis.each do |wiki|
       wiki.update_attribute(:private, true)
     end 
-    redirect_to user_registration_path
+    redirect_to wiki_path
    end 
    
   def downgrade
     @wikis = current_user.wikis
     @user = User.find(params[:id])
-    @user.update_attribute(:premium, false)
+    @user.update_attribute(:role, 'standard')
     @wikis.each do |wiki|
       wiki.update_attribute(:private, false)
     end 
-    redirect_to user_registration_path
+    redirect_to wiki_path
   end   
 
    def pundit_user

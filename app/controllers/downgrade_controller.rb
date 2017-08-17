@@ -3,7 +3,7 @@ class DowngradeController < ApplicationController
   end
   
   def create
-    current_user.update_attribute(:role, 'standard')
+    current_user.update_attributes(role: 'standard')
     wikis = Wiki.all
     wikis.each do |wiki|
       if wiki.user.id == current_user.id
@@ -13,6 +13,6 @@ class DowngradeController < ApplicationController
         
     flash[:notice] = "You have successfully downgraded your account."
         
-    redirect_to root_path
+    redirect_to wikis_path
   end
 end

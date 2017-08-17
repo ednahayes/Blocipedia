@@ -10,6 +10,7 @@ class ChargesController < ApplicationController
   
   def create
    
+   @user = current_user
    
    # Creates a Stripe Customer object, for associating
    # with the charge
@@ -26,10 +27,10 @@ class ChargesController < ApplicationController
      currency: 'usd'
    )
 
-   current_user.update_attribute(:role, 'premium')
+   
 
    if current_user.save!
-    
+    upgrade_user_role
     flash[:notice] = "Thanks for your payment, #{current_user.email}! You are now a premium member."
     redirect_to root_path(current_user) # or wherever
    end
@@ -40,4 +41,24 @@ class ChargesController < ApplicationController
      flash[:alert] = e.message
      redirect_to new_charge_path
   end
+  
+  def destroy
+  
+    subscription = Stripe::Subscription.retrieve("sub_3R3PlB2YlJe84a")
+    subscription.delete(:at_period_end => true)
+   
+    current_user.update_attributes(role: 'standard')
+    current_user.wikis.where(private: true).update_all(private: false)
+    
+    
+    flash[:notice] = "You are now a Standard Member."
+    redirect_to wikis_path
+  end
+  
+  private
+
+  def upgrade_user_role
+    @user.role = 'premium'
+  end  
+  
 end

@@ -7,15 +7,22 @@
        <div class="media">
          <div class="media-body">
            <h4 class="media-heading">
- <!-- #8 -->
-             <%= link_to wiki.title, wiki %>
-           </h4>
-         </div>
-       </div>
-     <% end %>
-   </div>
+ <!-- #if wiki is private -->
+          <% if wiki.private? %>
+            <%= link_to wiki.title, wiki, class: "private" %> <small>[private]</small>
+          <% else %>
+            <%= link_to wiki.title, wiki %>
+          <% end %>
+        </h3>
+        <small>By <%= wiki.user.username %> | <%= time_ago_in_words(wiki.created_at) %> ago</small>
+      </div>
+    </div>
+    <% end %>
+  </div>
    <div class="col-md-4">
- <!-- #9 -->
+ <!-- #if is current user -->
+     <% if current_user %>
      <%= link_to "New Wiki", new_wiki_path, class: 'btn btn-success' %>
+     <% end %>
    </div>
  </div>
