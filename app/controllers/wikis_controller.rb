@@ -1,26 +1,28 @@
 class WikisController < ApplicationController
   
-  before_action :authorize_user, except: [:index, :show] 
+  before_action :authorize_user, except: [:index, :show, :new, :create]
   
+  #after_action :verify_authorized, except: [:index, :new]
+  #after_action :verify_policy_scoped, only: [:index, :show]
   def index
-    @wikis = Wiki.all
-    #@wikis = policy_scope(Wiki)
+    #@wikis = Wiki.all
+    @wikis = policy_scope(Wiki)
   end
 
   def show
     @wiki = Wiki.find(params[:id])
     authorize @wiki
     #unless @wiki.private == 'false'
-     # flash[:alert] = "You must be signed in to view private topics."
-    #  redirect_to @wiki
-   # end
+     #flash[:alert] = "You must be signed in to view private topics."
+    #redirect_to @wiki
+    #end
   end
 
 
   def new
     @wiki = Wiki.new
     @user = current_user
-    authorize @wiki
+ 
   end
 
   def edit
@@ -76,8 +78,8 @@ class WikisController < ApplicationController
  
   
     def authorize_user
-        #@wiki = Wiki.find(params[:id])
-        unless current_user  || current_user.role == 'admin' || current_user.role = 'premium'
+        wiki = Wiki.find(params[:id])
+        unless current_user == wiki.user  || current_user.role == 'admin' 
             flash[:alert] = "You must be an admin to do that."
             redirect_to wiki_path
         end

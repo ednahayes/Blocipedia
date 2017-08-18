@@ -4,8 +4,11 @@ class Wiki < ApplicationRecord
     has_many :users
     
     default_scope { order('created_at DESC') }
- 
+    #default_scope { where(private: false) }
+    
     scope :visible_to, -> (user) { user ? all : joins(:wiki).where('wikis.private' => false) }  
+    
+    
     
     validates :title, length: { minimum: 5 }, presence: true
     validates :body, length: { minimum: 20 }, presence: true

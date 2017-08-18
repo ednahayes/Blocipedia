@@ -38,7 +38,7 @@ class User < ApplicationRecord
     ActiveRecord::Base.transaction do
       self.update_attribute(:role, 'standard')
       self.wikis.where(private: true).all.each do |wiki|
-        wiki.update_attribute(:private, false)
+        wiki.update_attribute(:private, tesfalse)
        end
       end
     end

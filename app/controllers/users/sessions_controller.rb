@@ -28,7 +28,7 @@ class Users::SessionsController < Devise::SessionsController
     @wikis.user = current_user.wikis
     @user = User.find(params[:id])
     @user.update_attribute(:role, 'premium')
-    @wikis.each do |wiki|
+    @wikis.user.each do |wiki|
       wiki.update_attribute(:private, true)
     end 
     redirect_to wiki_path
@@ -40,7 +40,7 @@ class Users::SessionsController < Devise::SessionsController
     
     if @user.downgrade!
       @user.update_attribute(:role, 'standard')
-      @wikis.each do |wiki|
+      @wikis.user.each do |wiki|
         wiki.update_attribute(:private, false)
        end 
       flash[:notice] = "You've been downgraded to standard. Your private wikis are now public."
