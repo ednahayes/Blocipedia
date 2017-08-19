@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   get 'charges/new'
 
-  resources :wikis
+  
   
   #resources :users, only: [:new, :create, :show]
 
@@ -16,5 +16,9 @@ Rails.application.routes.draw do
   }
   
   get 'about' => 'welcome#about'
+  
+  #MarkdownExample::Application.routes.draw do
+  resources :wikis
   root 'welcome#index'
+  #end
 end
