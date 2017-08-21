@@ -9,9 +9,9 @@
            <h4 class="media-heading">
  <!-- #if wiki is private -->
           <% if wiki.private?  %>
-            <%= link_to markdown(wiki.title), wiki.private == 'true', class: "private" %> <small>[private]</small>
+            <%= link_to (markdown wiki.title), wiki.private == 'true', class: "private" %> <small>[private]</small>
           <% else %>
-            <%= link_to markdown(wiki.title), wiki %>
+            <%= link_to (markdown wiki.title), wiki %>
           <% end %>
         </h3>
         <small>By <%= wiki.user.username %> | <%= time_ago_in_words(wiki.created_at) %> ago</small>
