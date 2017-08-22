@@ -23,8 +23,8 @@ class ApplicationPolicy
   end
 
   def update?
-    #user.present?
-    false #is in original
+    user.present?
+    #false #is in original
   end
 
   def edit?
