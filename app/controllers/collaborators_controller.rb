@@ -1,16 +1,22 @@
 class CollaboratorsController < ApplicationController
   
   def index
-    @collaborators = Collaborator.all
+    @collaborators = User.all
+    redirect_to @wiki
   end
   
   def new
     @collaborator = Collaborator.new(collaborator_params)
+    @wiki = Wiki.find(params[:id])
+    redirect_to @wiki
   end
 
   def create
-    @collaborator = Collaborator.new(collaborator_params)
+    @collaborators = User.all
+    @collaborator = @wiki.collaborators.build(collaborator_params)
     @wiki = Wiki.find(params[:collaborator][:wiki_id])
+    @new_collaborator = Collaborator.new
+    
     if @collaborator.save
       flash[:notice] = "Collaborator added successfully."
       redirect_to @wiki
@@ -22,8 +28,8 @@ class CollaboratorsController < ApplicationController
 
   def destroy
     @collaborator = Collaborator.find_by(params[:collaborator][:user_id], params[:collaborator][:wiki_id])
-    @wiki = @collaborator.wiki
-    if @collaborator.delete
+    @wiki = Wiki.find(params[:wiki_id])
+    if @collaborator.destroy
       flash[:notice] = "Collaborator removed successfully."
       redirect_to @wiki
     else
@@ -31,6 +37,11 @@ class CollaboratorsController < ApplicationController
       redirect_to @wiki
     end
   end
+  
+   def show
+     @collaborator = Collaborator.find(collaborator_params)
+     @wikis = @collaborator.wikis.visible_to(current_user)     
+   end   
   
   private
 

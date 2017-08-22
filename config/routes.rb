@@ -1,10 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'collaborators/new'
-
-  get 'collaborators/create'
-
-  get 'collaborators/destroy'
 
   get 'downgrade/new'
 
@@ -24,11 +19,6 @@ Rails.application.routes.draw do
   get 'about' => 'welcome#about'
   
   #MarkdownExample::Application.routes.draw do
-  get 'collaborators/new'
-
-  get 'collaborators/create'
-
-  get 'collaborators/destroy'
 
   resources :wikis do
     resources :collaborators, only: [:create, :destroy]

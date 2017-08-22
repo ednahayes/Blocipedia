@@ -2,14 +2,14 @@ class WikiPolicy < ApplicationPolicy
 
   def index?
     user_is_owner_of_record? || @record.private == false
-    unless user.role == 'premium' || user.role == 'admin'
-    end
-    #user.present?
+    #unless user.role == 'premium' || user.role == 'admin'
+    #end
+    
   end
 
   def update?
-    #user.present?
-    user.role == 'admin' || user_is_owner_of_record?
+    #user.present? && (record.user == user || user.admin? || record.users.include?(user))
+    user.role == 'admin' || user_is_owner_of_record? || record.users.include?(user)
   end
 
   def destroy?
@@ -25,13 +25,13 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def show?
-    user_is_owner_of_record? #|| @record.private == false
-    #user.present? 
+    user.present? || user_is_owner_of_record? || record.users.include?(user) || user.role == 'admin' || user.premium?
+    # record.private == false || user.present? && (record.user == user || user.admin? || user.premium? || record.users.include?(user))
   end
 
   def edit?
     #user.present? 
-    user.role == 'admin' || user_is_owner_of_record?
+    user.role == 'admin' || user_is_owner_of_record? || record.users.include?(user)
   end
   
   class Scope 

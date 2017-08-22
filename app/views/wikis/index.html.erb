@@ -14,7 +14,7 @@
             <%= link_to (markdown wiki.title), wiki %>
           <% end %>
         </h3>
-        <small>By <%= wiki.user.username %> | <%= time_ago_in_words(wiki.created_at) %> ago</small>
+        <small>Created By <%= wiki.user.username %> | <%= time_ago_in_words(wiki.created_at) %> ago</small>
       </div>
     </div>
     <% end %>
