@@ -1,7 +1,8 @@
 class Wiki < ApplicationRecord
     before_create :owner
     belongs_to :user
-    has_many :users
+    has_many :collaborators
+    has_many :users, :through => :collaborators
     
     default_scope { order('created_at DESC') }
     #default_scope { where(private: false) }
@@ -17,4 +18,11 @@ class Wiki < ApplicationRecord
     def owner
     self.user_id = user.id
     end
+    
+    def collaborators
+        #Collaborator.where( id: users.pluck(:collaborator_id)) refractored
+        users.collaborators
+    end
+    
+    
 end

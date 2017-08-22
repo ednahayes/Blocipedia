@@ -13,6 +13,13 @@
     <div>
       Private: <%= @wiki.private? %>
     </div> 
+    <div class="hidden">
+  
+            <% if @collaborator.any? %>  
+            <small class="pull-right text-right">Collaborators:<%= render partial: 'collaborators/collaborators', collection: @collaborator %></small>
+            <% end %>
+   
+    </div>    
       <div class="col-md-4">
       <% if policy(@wiki).update? %>   
          <%= link_to "Edit Wiki", edit_wiki_path(@wiki), class: 'btn btn-success' %>

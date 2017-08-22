@@ -1,7 +1,8 @@
 class User < ApplicationRecord
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
-  has_many :wikis, dependent: :destroy
+  has_many :wikis, :through => :collaborators, dependent: :destroy
+  has_many :collaborators
   attr_accessor :login, :role
   
 
@@ -43,4 +44,15 @@ class User < ApplicationRecord
       end
     end
   
+  def self.wikis
+    Wiki.where( id: pluck(:wiki_id))
+  end
+  
+  def self.collaborators
+    Collaborator.where( id: pluck(:collaborator_id))
+  end
+  
+  def wiki
+    Wiki.find(wiki_id)
+  end
 end
