@@ -8,7 +8,7 @@
          <div class="media-body">
            <h4 class="media-heading">
  <!-- #if wiki is private -->
-          <% if wiki.private?  %>
+          <% if wiki.private? && user_is_owner_of_record? %>
             <%= link_to (markdown wiki.title), wiki.private == 'true', class: "private" %> <small>[private]</small>
           <% else %>
             <%= link_to (markdown wiki.title), wiki %>

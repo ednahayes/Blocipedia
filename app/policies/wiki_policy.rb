@@ -1,7 +1,7 @@
 class WikiPolicy < ApplicationPolicy
 
   def index?
-    user_is_owner_of_record? || @record.private == false
+    user_is_owner_of_record? #|| @record.private == false
     #unless user.role == 'premium' || user.role == 'admin'
     #end
     
@@ -9,7 +9,7 @@ class WikiPolicy < ApplicationPolicy
 
   def update?
     #user.present? && (record.user == user || user.admin? || record.users.include?(user))
-    user.role == 'admin' || user_is_owner_of_record? || record.users.include?(user)
+    record.user == user || user.role == 'admin' || user_is_owner_of_record? || record.users.include?(user)
   end
 
   def destroy?
@@ -25,8 +25,8 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def show?
-    user.present? || user_is_owner_of_record? || record.users.include?(user) || user.role == 'admin' || user.premium?
-    # record.private == false || user.present? && (record.user == user || user.admin? || user.premium? || record.users.include?(user))
+    user.present? || user_is_owner_of_record? || record.users.include?(user) || user.role == 'admin' || user.role == 'premium' || user.premium?
+    record.private == false || user.present? && (record.user == user || user.admin? || user.premium? || record.users.include?(user))
   end
 
   def edit?
@@ -81,7 +81,7 @@ class WikiPolicy < ApplicationPolicy
     end
   end
   
-  private
+ 
   def user_is_owner_of_record?
     @user == @record.user
   end
