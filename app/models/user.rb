@@ -39,10 +39,22 @@ class User < ApplicationRecord
     ActiveRecord::Base.transaction do
       self.update_attribute(:role, 'standard')
       self.wikis.where(private: true).all.each do |wiki|
-        wiki.update_attribute(:private, tesfalse)
+        wiki.update_attribute(:private, false)
        end
       end
     end
+    
+  def admin?
+    role == 'admin'
+  end
+
+  def standard?
+    role == 'standard'
+  end
+
+  def premium?
+    role == 'premium'
+  end
   
   def self.wikis
     Wiki.where( id: pluck(:wiki_id))

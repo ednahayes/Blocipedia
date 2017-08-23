@@ -12,9 +12,10 @@ class CollaboratorsController < ApplicationController
   end
 
   def create
+    @wiki = Wiki.find(params[:wiki_id])
     @collaborators = User.all
-    @collaborator = @wiki.collaborators.build(collaborator_params)
-    @wiki = Wiki.find(params[:collaborator][:wiki_id])
+    @collaborator = Collaborator.new(collaborator_params)
+    #@collaborator = @wiki.collaborator.build(collaborator_params)
     @new_collaborator = Collaborator.new
     
     if @collaborator.save
@@ -27,7 +28,7 @@ class CollaboratorsController < ApplicationController
   end
 
   def destroy
-    @collaborator = Collaborator.find_by(params[:collaborator][:user_id], params[:collaborator][:wiki_id])
+    @collaborator = Collaborator.find_by(params[:user_id])
     @wiki = Wiki.find(params[:wiki_id])
     if @collaborator.destroy
       flash[:notice] = "Collaborator removed successfully."

@@ -1,4 +1,4 @@
-<% if policy(@wiki).show? %> 
+
  <div class="container">
   <div class="col-md-8">
    <h1><%= markdown @wiki.title %> <br></h1>
@@ -18,7 +18,7 @@
         <div class='collaborators'>
           <%= render partial: 'collaborators/collaborators', locals: { wiki: @wiki } %>
         </div>
-          <% if @wiki.user_id == current_user.id || current_user.admin? %> 
+          <% if @wiki.user_id == current_user.id || current_user.admin? || current_user %> 
             <div class='new-collaborator'>
             <%= render partial: 'collaborators/form', locals: { wiki: @wiki } %>
             </div>
@@ -27,4 +27,4 @@
       <% end %>
     </div>
   </div>
-<% end %> 
+

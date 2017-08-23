@@ -1,19 +1,19 @@
 class WikiPolicy < ApplicationPolicy
 
   def index?
-    user_is_owner_of_record? #|| @record.private == false
-    #unless user.role == 'premium' || user.role == 'admin'
+    #user_is_owner_of_record? || user.role == 'premium' || user.role == 'admin' || user.admin? || user.premium?
+    #unless 
     #end
-    
+    user.present?
   end
 
   def update?
-    #user.present? && (record.user == user || user.admin? || record.users.include?(user))
-    record.user == user || user.role == 'admin' || user_is_owner_of_record? || record.users.include?(user)
+    user.present? && (record.user == user || user.admin? || record.users.include?(user))
+    #record.user == user || user.role == 'admin' || user_is_owner_of_record? || record.users.include?(user)
   end
 
   def destroy?
-    user.role == 'admin' || user_is_owner_of_record?
+    user.role == 'admin' || user_is_owner_of_record? || record.user == user
   end
 
   def new?
@@ -25,8 +25,9 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def show?
-    user.present? || user_is_owner_of_record? || record.users.include?(user) || user.role == 'admin' || user.role == 'premium' || user.premium?
-    record.private == false || user.present? && (record.user == user || user.admin? || user.premium? || record.users.include?(user))
+    user.present? 
+    #|| user_is_owner_of_record? || record.users.include?(user) || user.role == 'admin' || user.role == 'premium' || user.premium?
+    #record.private == false || user.present? && (record.user == user || user.admin? || user.premium? || record.users.include?(user))
   end
 
   def edit?

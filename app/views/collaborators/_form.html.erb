@@ -7,8 +7,12 @@
         <td><%= user.username %></td>
         <td>
           <%= f.hidden_field :user_id, :value => user.id %>
-          <%= f.submit "Add", class: 'btn btn-xs btn-success', method: :create %>   
-        <% end %>  
+          <%= f.submit "Add", class: 'btn btn-xs btn-success', method: :create %> 
+        </td>
+        <td> 
+          <%= f.hidden_field :user_id, :value => user.id %>
+          <%= f.submit "Remove", class: 'btn btn-xs btn-warning', method: :destroy %>
+          <% end %>  
         </td>
       </tr>
       </tr>
