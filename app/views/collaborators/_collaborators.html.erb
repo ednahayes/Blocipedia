@@ -3,12 +3,10 @@
   <tr id="collaborator-<%= collaborator.id %>">
       <% user = User.find(collaborator.user_id) %>
       <td><%= user.username %></td>
-      
-      
       <td>
       <%= link_to "Remove Collaborator", [@wiki, collaborator], method: :delete, class: 'btn btn-xs btn-danger', remote: true  %>
       </td>
-     
+    
     </tr>
   <% end %>
 </table>
