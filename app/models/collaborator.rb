@@ -1,7 +1,7 @@
 class Collaborator < ApplicationRecord
   belongs_to :user
-  #belongs_to :wiki
-  has_many :wikis
+  belongs_to :wiki
+  #has_many :wikis
   
   def users
     Users.where(collaborator_id: id)
