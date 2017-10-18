@@ -1,6 +1,6 @@
 class Collaborator < ApplicationRecord
   belongs_to :user
-  belongs_to :wiki
+  #belongs_to :wiki
   has_many :wikis
   
   def users
