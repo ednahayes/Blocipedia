@@ -1,29 +1,32 @@
- <div class="jumbotron">
+<div class="container">  
+ <div class="jumbotron text-center">
    <h1>Blocipedia</h1>
    <p>Blocipedia lets users create their own wikis.
    <p>
-     <%= link_to "Sign In", new_user_session_path %> or
+     <%= link_to "Sign In", new_user_session_path, class: 'btn btn-success' %> or
      <%= link_to "Sign Up", user_session_path, class: 'btn btn-primary' %> today!
    </p>
-   <div class="col-md-5">
+
      <h4 class='premium-location'> Create Private Wikis </h4>
      <div class='premium-button'>
-      <%= link_to "Premium Plan", new_charge_path, class: 'btn btn-info' %>
+      <%= link_to "Premium Plan", new_charge_path, class: 'btn btn-secondary' %>
      </div>
-   </div>
+
  </div>
- 
+</div> 
+<div class="container">  
  <div class="row">
    <div class="col-md-4">
-     <h2>Solves world hunger</h2>
+     <h2>Collaborate</h2>
      <p>Wikis are a great way to collaborate on community-sourced content.</p>
    </div>
    <div class="col-md-4">
-     <h2>Eliminates poverty</h2>
+     <h2>Think out of the box</h2>
      <p>Whether the wiki is for a hobby or work-related project.</p>
    </div>
    <div class="col-md-4">
-     <h2>Makes you better looking</h2>
+     <h2>Share</h2>
      <p>Blocipedia lets you share you own wikis publicly or privately with other collaborators.</p>
    </div>
  </div>
+</div> 
