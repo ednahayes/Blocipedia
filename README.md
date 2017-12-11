@@ -1,4 +1,4 @@
-#BLOCIPEDIA
+# BLOCIPEDIA
 
 Blocipedia is a Ruby on Rails app that allows users to create public and private Markdown-based wikis.
 Users can upgrade their account by paying a membership, which allows them to view and create private wikis.
