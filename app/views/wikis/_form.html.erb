@@ -18,15 +18,32 @@
      <%= f.text_area :body, rows: 8, class: 'form-control', placeholder: "Enter wiki body" %>
    <% end %>
  
-    <% if current_user.role = 'admin' || current_user.admin? || current_user.role == 'premium' || current_user.premium? #|| current_user %>
+    <% if current_user.role = 'admin' || current_user.role = 'premium' %>
       <div class="form-group">
         <%= f.label :private, class: 'checkbox' do %>
         <%= f.check_box :private %> Private wiki
+        <% end %>
+      </div>
     <% end %>
-    </div>
-
     <div class="form-group">
      <%= f.submit "Save", class: 'btn btn-success' %>
    </div>
- <% end %>
 <% end %>
+  <% if @wiki.persisted? %>
+  <div class="row top-buffer">
+    <div class="col-lg-2">Collaborators</div>
+    <div class="col-lg-10">
+      <%= !@wiki.collaborators.empty? ? @wiki.collaborators.map{ |c|"<u>#{c.user.email}</u>"}.join(", ").html_safe : "There are no collaborators in this wiki."  %>
+    </div>
+  </div>
+
+  <div class="row top-buffer">
+    <div class="form-group">
+      <div class="col-lg-5 col-lg-offset-7">
+        <%= link_to "Edit Collaborators", wiki_collaborators_path(@wiki), class: "btn btn-info btn-block"%>
+      </div>
+    </div>
+  </div>
+  <% end %>
+
+  

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   
   #resources :users, only: [:new, :create, :show]
 
-  resources :charges, only: [:new, :create]
+  resources :charges, only: [:new, :create, :destroy]
 
 
   devise_for :users, controllers: {
@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   #MarkdownExample::Application.routes.draw do
 
   resources :wikis do
-    resources :collaborators, only: [:create, :destroy]
+    resources :collaborators, only: [:index, :create, :destroy]
   end
   root 'welcome#index'
   #end

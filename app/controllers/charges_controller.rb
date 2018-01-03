@@ -59,6 +59,8 @@ class ChargesController < ApplicationController
 
   def upgrade_user_role
     @user.role = 'premium'
+    current_user.premium!
+    current_user.role = 'premium'
   end  
   
 end

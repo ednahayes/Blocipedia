@@ -1,0 +1,38 @@
+
+<div class="col-lg-10 col-lg-offset-1">
+  <h1>Collaborators for <u><%= @wiki.title %></u></h1>
+
+  <div class="well clearfix">
+  <table class="table">
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.email %></td>
+        <td>
+          <div class="pull-right">
+          <% if @wiki.collaborators.include?(user) %>
+              <%# link to remove as collaborator %>
+              <%= link_to( "Remove collaborator from Wiki",
+                wiki_collaborator_path(@wiki, user_id: user.id, wiki_id: @wiki.id),
+                method: :delete,
+                :class => "btn btn-info") %>
+      
+          <% else %>
+              <%# link_to add as collaborator %>
+              <%= link_to( "Add as collaborator",
+                wiki_collaborators_path(@wiki, user_id: user.id, wiki_id: @wiki.id),
+                method: :post,
+                class: "btn btn-success") %>
+          <% end %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  </div>
+
+  <div>
+    <%= link_to 'Back to Wiki Edit', edit_wiki_path(@wiki) %>
+  </div>
+  <br />
+  
+</div>

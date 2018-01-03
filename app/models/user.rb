@@ -57,11 +57,11 @@ class User < ApplicationRecord
   end
   
   def self.wikis
-    Wiki.where( id: pluck(:wiki_id))
+    Wiki.where(id: pluck(:wiki_id))
   end
   
   def self.collaborators
-    Collaborator.where( id: pluck(:collaborator_id))
+    Collaborator.where(id: pluck(:user_id))
   end
   
   def wiki

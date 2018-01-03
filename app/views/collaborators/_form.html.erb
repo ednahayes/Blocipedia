@@ -5,7 +5,7 @@
       <tr id='user-<%=user.id%>' >
         <tr id='@wiki-<%=@wiki.id%>' >
         <td><%= user.username %></td>
-           <% if @wiki.users.include? user %>
+           <% if @wiki.users.include?(user) %>
             <td> 
               <%= f.hidden_field :user_id, :value => user.id %>
               <%= f.submit "Remove", class: 'btn btn-xs btn-warning', method: :destroy %>
@@ -15,12 +15,6 @@
               <%= f.hidden_field :user_id, :value => user.id %>
               <%= f.submit "Add", class: 'btn btn-xs btn-success', method: :create %>
             </td>  
-              <% if @wiki.users.include? user %>
-            <td> 
-              <%= f.hidden_field :user_id, :value => user.id %>
-              <%= f.submit "Remove", class: 'btn btn-xs btn-warning', method: :destroy %>
-              <% end %> 
-            </td>
            <% end %>  
             </td>
           <% end %>

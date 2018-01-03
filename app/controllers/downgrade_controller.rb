@@ -13,6 +13,6 @@ class DowngradeController < ApplicationController
         
     flash[:notice] = "You have successfully downgraded your account."
         
-    redirect_to wikis_path
+    redirect_to wikis_path(current_user)
   end
 end

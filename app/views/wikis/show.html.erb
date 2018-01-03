@@ -11,20 +11,7 @@
     <% if policy(@wiki).destroy? %> 
         <%= link_to "Delete Wiki", @wiki, method: :delete,  class: 'btn btn-danger', data: { confirm: 'Are you sure you want to delete this wiki?' } %><br>
     <% end %>
-    <small>Private: <%= @wiki.private? %> </small>
-    <% if @wiki.private == true  %>
-        <h4>Wiki owner: <%= @wiki.user.username %></h4><small> submitted <%= time_ago_in_words(@wiki.created_at) %> ago.</small> 
-        <h5>Collaborators:</h5> 
-        <div class='collaborators'>
-          <%= render partial: 'collaborators/collaborators', locals: { wiki: @wiki } %>
-        </div>
-          <% if @wiki.user_id == current_user.id || current_user.admin? || current_user %> 
-            <div class='new-collaborator'>
-            <%= render partial: 'collaborators/form', locals: { wiki: @wiki } %>
-            </div>
-          </div>
-          <% end %>
-      <% end %>
-    </div>
+
   </div>
+ </div>
 

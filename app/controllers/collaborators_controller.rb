@@ -1,42 +1,38 @@
 class CollaboratorsController < ApplicationController
+  before_action :set_wiki
   
   def index
-    @collaborators = User.all
-    redirect_to @wiki
+    @users = User.all
+    #redirect_to @wiki
   end
   
-  def new
-    @collaborator = Collaborator.new(collaborator_params)
-    @wiki = Wiki.find(params[:id])
-    redirect_to @wiki
-  end
-
   def create
-    @wiki = Wiki.find(params[:wiki_id])
-    @collaborators = User.all
-    @collaborator = Collaborator.new(collaborator_params)
-    #@collaborator = @wiki.collaborator.build(collaborator_params)
-    @new_collaborator = Collaborator.new
-    
-    if @collaborator.save
-      flash[:notice] = "Collaborator added successfully."
-      redirect_to @wiki
+    #@wiki = Wiki.find(params[:wiki_id])
+    #@collaborators = User.all
+    @user = User.find(params[:user_id])
+    #@collaborator = Collaborator.new(collaborator_params)
+    @collaborator = @wiki.collaborators.build(user_id: params[:user_id])
+   
+    if @collaborator.save!
+      flash[:notice] = "Collaborator #{@user.email} added successfully."
+      #redirect_to @wiki
     else
-      flash[:error] = "Was not able to add collaborator, please try again."
-      redirect_to @wiki
+      flash[:error] = "Was not able to add collaborator #{@user.email}, please try again."
     end
+    redirect_to wiki_collaborators_path(@wiki)
   end
 
   def destroy
-    @collaborator = Collaborator.find_by(params[:user_id])
-    @wiki = Wiki.find(params[:wiki_id])
+    @user = User.find(params[:user_id])
+    @collaborator = Collaborator.where(wiki_id: params[:id], user_id: params[:user_id]).first
+    #@collaborator = Collaborator.find_by(params[:user_id])
+    #@wiki = Wiki.find(params[:wiki_id])
     if @collaborator.destroy
-      flash[:notice] = "Collaborator removed successfully."
-      redirect_to @wiki
+      flash[:notice] = "Collaborator #{@user.email} removed successfully."
     else
-      flash[:error] = "Something went wrong."
-      redirect_to @wiki
+      flash[:error] = "#{@user.email} couldn't be removed, please try again."
     end
+    redirect_to wiki_collaborators_path(@wiki)
   end
   
    def show
@@ -49,4 +45,9 @@ class CollaboratorsController < ApplicationController
   def collaborator_params
     params.require(:collaborator).permit(:user_id, :wiki_id)
   end
+  
+  def set_wiki
+    @wiki = Wiki.find(params[:wiki_id])
+  end
+  
 end
