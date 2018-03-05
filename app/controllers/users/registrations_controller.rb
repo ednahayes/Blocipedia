@@ -147,5 +147,5 @@ class Users::RegistrationsController < Devise::RegistrationsController
     'devise.registrations'
   end
 end
-Contact GitHub API Training Shop Blog About
-© 2017 GitHub, Inc. Terms Privacy Sec
+#Contact GitHub API Training Shop Blog About
+#© 2017 GitHub, Inc. Terms Privacy Sec

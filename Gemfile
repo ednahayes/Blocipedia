@@ -12,7 +12,7 @@
  
  group :production do
    # Use pg as the production database for Active Record
-   gem 'pg', '~> 0.20'
+   gem 'pg', '0.20.0'
    gem 'rails_12factor'
  end
  
