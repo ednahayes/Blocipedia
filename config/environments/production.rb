@@ -26,6 +26,9 @@ Rails.application.configure do
 
   #disabled below line  added above
   #config.public_file_server.enabled = true
+  
+  # added below for Heroku deployment assets were not showing
+  config.assets.precompile += ['hella-tite.css']
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
